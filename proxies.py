@@ -53,7 +53,7 @@ def GetFreeProxy():
 
 def qiandao_115_proxy():
     #phone_num=['15694514212','15694638554','15694639084','15698821731']
-    phone_num=['15694638554','15694514212']
+    phone_num=['15694639084','15698821731']
     match = GetFreeProxy()
     if match:
         for temp in phone_num:
