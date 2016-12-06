@@ -52,8 +52,8 @@ def GetFreeProxy():
     return match
 
 def qiandao_115_proxy():
-    #phone_num=['15694514212','15694638554','15694639084','15698821731']
-    phone_num=['15694639084','15698821731']
+    phone_num=['15694514212','15694638554','15694639084','15698821731']
+    #phone_num=['15694639084','15698821731']
     match = GetFreeProxy()
     if match:
         for temp in phone_num:
@@ -67,5 +67,5 @@ def qiandao_115_proxy():
                         qiandao_115(temp,proxy[0]+":"+proxy[1])
                     except Exception as err:  
                         print(err)
-                        sendmail('error_115_qiandao_' + userid + '_' + time.strftime('%Y-%m-%d'), str(err))
+                        sendmail('error_115_qiandao_' + temp + '_' + time.strftime('%Y-%m-%d'), str(err))
                     break
