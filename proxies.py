@@ -37,7 +37,7 @@ def GetFreeProxy():
         'Accept-Language':'zh-CN,zh;q=0.8,ja;q=0.6,zh-TW;q=0.4',
         'Cache-Control':'max-age=0',
         'Connection':'keep-alive',
-        'Cookie':'_free_proxy_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJWM5YTVhNjRlMWUxOTBmMjE5YjAwMTcyMThhZjVhMzNjBjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMWQ5U1prZnI2STlvaFNjSTJGWWhIY3plSjJwSE1RcmR5cGhSMTRwWEwwVms9BjsARg%3D%3D--dbcb01484e42bf27370a95981cd0816f159f4cdc; CNZZDATA1256960793=2050646945-1480229717-null%7C1480777959',
+        #'Cookie':'_free_proxy_session=BAh7B0kiD3Nlc3Npb25faWQGOgZFVEkiJWM5YTVhNjRlMWUxOTBmMjE5YjAwMTcyMThhZjVhMzNjBjsAVEkiEF9jc3JmX3Rva2VuBjsARkkiMWQ5U1prZnI2STlvaFNjSTJGWWhIY3plSjJwSE1RcmR5cGhSMTRwWEwwVms9BjsARg%3D%3D--dbcb01484e42bf27370a95981cd0816f159f4cdc; CNZZDATA1256960793=2050646945-1480229717-null%7C1480777959',
         'Host':'www.xicidaili.com',
         'Upgrade-Insecure-Requests':'1',
         'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36',
@@ -52,9 +52,10 @@ def GetFreeProxy():
     return match
 
 def qiandao_115_proxy():
-    phone_num=['15694514212','15694638554','15694639084','15698821731']
-    #phone_num=['15694639084','15698821731']
+    phone_num=['15694514212','15694638554','15694639084','15698821731','18640815']
+#    phone_num=['15694514212']
     match = GetFreeProxy()
+    str_result = '115_qiandao_start...<br>'
     if match:
         for temp in phone_num:
             print(temp)
@@ -63,9 +64,17 @@ def qiandao_115_proxy():
                 #代理IP可用时（响应<1.2s），进行签到
                 if (proxy_test(proxy[0]+":"+proxy[1]) < 1.2):
                     
+                    str_result += temp + '>>>' + proxy[0]+":"+proxy[1] + '<br>'
                     try:
-                        qiandao_115(temp,proxy[0]+":"+proxy[1])
+                        str_result += qiandao_115(temp,proxy[0]+":"+proxy[1])
+                        str_result += '------------------------<br>'
                     except Exception as err:  
                         print(err)
-                        sendmail('error_115_qiandao_' + temp + '_' + time.strftime('%Y-%m-%d'), str(err))
+                        str_result += str(err) + '<br>'
+                        str_result += '------------------------<br>'
+#                        sendmail('error_115_qiandao_' + temp + '_' + time.strftime('%Y-%m-%d'), str(err))
                     break
+    sendmail('115_qiandao_' + time.strftime('%Y-%m-%d'), str_result)
+    
+if __name__ == '__main__':
+    qiandao_115_proxy()
