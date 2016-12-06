@@ -7,7 +7,7 @@ Created on Sat Dec  3 19:55:45 2016
 
 import requests
 import time
-#from sendmail import sendmail
+from sendmail import sendmail
 import re
 from qindao_115_proxy import qiandao_115
 
@@ -18,7 +18,7 @@ def proxy_test(proxy):
             "http": "http://" + proxy
             }
         time1 =time.time()
-        requests.get('http://m.115.com',proxies = proxies,timeout=3)
+        requests.get('http://web.api.115.com/',proxies = proxies,timeout=3)
         time_num = round(time.time()-time1,2)
         print(proxy,time_num)
         return time_num
@@ -52,8 +52,8 @@ def GetFreeProxy():
     return match
 
 def qiandao_115_proxy():
-    phone_num=['15694514212','15694638554','15694639084','15698821731']
-#    phone_num=['15694638554','15694639084']
+    #phone_num=['15694514212','15694638554','15694639084','15698821731']
+    phone_num=['15694638554','15694514212']
     match = GetFreeProxy()
     if match:
         for temp in phone_num:
@@ -67,5 +67,5 @@ def qiandao_115_proxy():
                         qiandao_115(temp,proxy[0]+":"+proxy[1])
                     except Exception as err:  
                         print(err)
-                    
+                        sendmail('error_115_qiandao_' + userid + '_' + time.strftime('%Y-%m-%d'), str(err))
                     break
