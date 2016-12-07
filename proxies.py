@@ -52,21 +52,36 @@ def GetFreeProxy():
     return match
 
 def qiandao_115_proxy():
-    #phone_num=['15694514212','15694638554','15694639084','15698821731','18640815']
-    phone_num=['15694514212','15698821731']
+    phone_num=['15694514212','15694638554','15694639084','15698821731','18640815']
+        
+    #phone_num=['15694514212','15698821731']
     match = GetFreeProxy()
     str_result = '115_qiandao_start...<br>'
+    
     if match:
-        #phone_num_err = []
-        for i in range(2):
+
+        #签到3次
+        for i in range(3):
+            #全部完成退出
+            if len(phone_num)==0:
+                break;
+            
+            time.sleep(1)
+            #Log出力
             print('qiandao_num',i+1)
             str_result += str(i+1) + ' **************************<br>'
+            #标记签到完成的账号用
+            phone_num_temp = []
             
             for temp in phone_num:
                 print(temp)
+                #标记使用过的proxy用
+                match_temp = []
                 
                 for proxy in match:
-                    match.remove(proxy)
+                    #标记使用过的proxy
+                    match_temp.append(proxy)
+                    
                     #代理IP可用时（响应<0.8s），进行签到
                     if (proxy_test(proxy[0]+":"+proxy[1]) < 0.8):
 
@@ -74,14 +89,21 @@ def qiandao_115_proxy():
                         try:
                             str_result += qiandao_115(temp,proxy[0]+":"+proxy[1])
                             str_result += '------------------------<br>'
-                            phone_num.remove(temp)
+                            #标记签到完成的账号
+                            phone_num_temp.append(temp)
                         except Exception as err: 
-                            #phone_num_err.append(temp)
+                            
                             print(err)
                             str_result += str(err) + '<br>'
                             str_result += '------------------------<br>'
-    #                        sendmail('error_115_qiandao_' + temp + '_' + time.strftime('%Y-%m-%d'), str(err))
+
                         break
+                #删除使用完的proxy
+                for mm in match_temp:
+                    match.remove(mm)
+            #删除使用完的账号
+            for pp in phone_num_temp:
+                phone_num.remove(pp)
 
     sendmail('115_qiandao_' + time.strftime('%Y-%m-%d'), str_result)
     
