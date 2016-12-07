@@ -52,28 +52,37 @@ def GetFreeProxy():
     return match
 
 def qiandao_115_proxy():
-    phone_num=['15694514212','15694638554','15694639084','15698821731','18640815']
-#    phone_num=['15694514212']
+    #phone_num=['15694514212','15694638554','15694639084','15698821731','18640815']
+    phone_num=['15694514212','15698821731']
     match = GetFreeProxy()
     str_result = '115_qiandao_start...<br>'
     if match:
-        for temp in phone_num:
-            print(temp)
-            for proxy in match:
-                match.remove(proxy)
-                #代理IP可用时（响应<1.2s），进行签到
-                if (proxy_test(proxy[0]+":"+proxy[1]) < 1.2):
-                    
-                    str_result += temp + '>>>' + proxy[0]+":"+proxy[1] + '<br>'
-                    try:
-                        str_result += qiandao_115(temp,proxy[0]+":"+proxy[1])
-                        str_result += '------------------------<br>'
-                    except Exception as err:  
-                        print(err)
-                        str_result += str(err) + '<br>'
-                        str_result += '------------------------<br>'
-#                        sendmail('error_115_qiandao_' + temp + '_' + time.strftime('%Y-%m-%d'), str(err))
-                    break
+        #phone_num_err = []
+        for i in range(2):
+            print('qiandao_num',i+1)
+            str_result += str(i+1) + ' **************************<br>'
+            
+            for temp in phone_num:
+                print(temp)
+                
+                for proxy in match:
+                    match.remove(proxy)
+                    #代理IP可用时（响应<0.8s），进行签到
+                    if (proxy_test(proxy[0]+":"+proxy[1]) < 0.8):
+
+                        str_result += temp + '>>>' + proxy[0]+":"+proxy[1] + '<br>'
+                        try:
+                            str_result += qiandao_115(temp,proxy[0]+":"+proxy[1])
+                            str_result += '------------------------<br>'
+                            phone_num.remove(temp)
+                        except Exception as err: 
+                            #phone_num_err.append(temp)
+                            print(err)
+                            str_result += str(err) + '<br>'
+                            str_result += '------------------------<br>'
+    #                        sendmail('error_115_qiandao_' + temp + '_' + time.strftime('%Y-%m-%d'), str(err))
+                        break
+
     sendmail('115_qiandao_' + time.strftime('%Y-%m-%d'), str_result)
     
 if __name__ == '__main__':
