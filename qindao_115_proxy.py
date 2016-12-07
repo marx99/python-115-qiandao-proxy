@@ -80,7 +80,7 @@ def qiandao_115(userid,proxy):
     posturl='http://web.api.115.com/user/sign'
     postr = requests.post(posturl,headers = postheaders,proxies=proxies,timeout=6)
     print( 'post ' + userid,postr.status_code,postr.json())
-    str_result += 'post ' + userid + postr.status_code + str(postr.json()) + '<br>'
+    str_result += 'post ' + userid + str(postr.json()) + '<br>'
     
     time.sleep(2)
     
@@ -88,11 +88,17 @@ def qiandao_115(userid,proxy):
     #geturl = 'http://web.api.115.com/user/sign?start=2016-11-01&_=1478610072924'
     geturl = 'http://web.api.115.com/user/sign?start='+ time.strftime('%Y-%m-01') +'&_=' + str(round(time.time()*1000))
     #result output
-    get_str = requests.get(geturl,headers = postheaders,proxies=proxies,timeout=6)
-    print( 'result ' + userid,get_str.status_code,get_str.json())
     
-    str_result += 'result ' + userid + get_str.status_code + str(get_str.json()) + '<br>'
+    try:
+        
+        get_str = requests.get(geturl,headers = postheaders,proxies=proxies,timeout=6)
+        print( 'result ' + userid,get_str.status_code,get_str.json())
     
+        str_result += 'result ' + userid + str(get_str.json()) + '<br>'
+    except Exception as err:  
+        print( 'result ' + userid,str(err))
+        str_result += 'result ' + userid + str(err) + '<br>'
+        
     return str_result
     #send mail
 #    sendmail('115_qiandao_' + userid + '_' + time.strftime('%Y-%m-%d'), str(postr.json()) + '<br>' + str(get_str.json()))
