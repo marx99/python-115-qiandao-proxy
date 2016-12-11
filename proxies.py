@@ -17,15 +17,26 @@ def proxy_test(proxy):
         proxies = {
             "http": "http://" + proxy
             }
-        time1 =time.time()
+        
+        #115.com
+        time1_1 =time.time()
+        requests.get('http://115.com/',proxies = proxies,timeout=3)
+        time_num_1 = round(time.time()-time1_1,2)
+        
+        time.sleep(1)
+        
+        time1_2 =time.time()
         requests.get('http://web.api.115.com/',proxies = proxies,timeout=3)
-        time_num = round(time.time()-time1,2)
-        print(proxy,time_num)
+        time_num_2 = round(time.time()-time1_2,2)
+        
+        time_num = max(time_num_1,time_num_2)
+        print(proxy,time_num,time_num_1,time_num_2)
         return time_num
 #        print(round(time.time()-time1,2))
 #        return True
     except Exception as err:  
 #        print(err)
+        print(proxy,100)
         return 100
 
 def GetFreeProxy():
@@ -52,9 +63,9 @@ def GetFreeProxy():
     return match
 
 def qiandao_115_proxy():
-    phone_num=['15694514212','15694638554','15694639084','15698821731','18640815']
+    phone_num=['15694514212','15694638554','15694639084','15698821731','18640815','15942888','15694636714']
         
-    #phone_num=['15694514212','15698821731']
+#    phone_num=['15694636714']
     match = GetFreeProxy()
     str_result = '115_qiandao_start...<br>'
     
@@ -66,10 +77,10 @@ def qiandao_115_proxy():
             if len(phone_num)==0:
                 break;
             
-            time.sleep(1)
+            time.sleep(i*5)
             #Log出力
             print('qiandao_num',i+1)
-            str_result += str(i+1) + ' **************************<br>'
+            str_result += str(i+1) + ' ************<br>'
             #标记签到完成的账号用
             phone_num_temp = []
             
@@ -88,14 +99,14 @@ def qiandao_115_proxy():
                         str_result += temp + '>>>' + proxy[0]+":"+proxy[1] + '<br>'
                         try:
                             str_result += qiandao_115(temp,proxy[0]+":"+proxy[1])
-                            str_result += '------------------------<br>'
+                            str_result += '------------<br>'
                             #标记签到完成的账号
                             phone_num_temp.append(temp)
                         except Exception as err: 
                             
                             print(err)
                             str_result += str(err) + '<br>'
-                            str_result += '------------------------<br>'
+                            str_result += '------------<br>'
 
                         break
                 #删除使用完的proxy
