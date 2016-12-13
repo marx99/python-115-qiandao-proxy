@@ -63,16 +63,16 @@ def GetFreeProxy():
     return match
 
 def qiandao_115_proxy():
-    phone_num=['15694514212','15694638554','15694639084','15698821731','18640815','15942888','15694636714']
+    #phone_num=['15694514212','15694638554','15694639084','15698821731','18640815','15942888','15694636714']
         
-#    phone_num=['15694636714']
+    phone_num=['18640815','15942888']
     match = GetFreeProxy()
     str_result = '115_qiandao_start...<br>'
     
     if match:
 
-        #签到3次
-        for i in range(3):
+        #签到2次
+        for i in range(2):
             #全部完成退出
             if len(phone_num)==0:
                 break;
@@ -93,8 +93,8 @@ def qiandao_115_proxy():
                     #标记使用过的proxy
                     match_temp.append(proxy)
                     
-                    #代理IP可用时（响应<0.8s），进行签到
-                    if (proxy_test(proxy[0]+":"+proxy[1]) < 0.8):
+                    #代理IP可用时（响应<1s），进行签到
+                    if (proxy_test(proxy[0]+":"+proxy[1]) < 1):
 
                         str_result += temp + '>>>' + proxy[0]+":"+proxy[1] + '<br>'
                         try:
